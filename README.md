@@ -12,7 +12,8 @@ script for running develop environment of fastapi on container
 docker run \
     -dp 8000:8000 \
     -w /app \
-    -v "$(pwd):/app" \
+    -v "$(pwd)/app:/app" \
+    --network=my-mysql-network \
     python:3.10.7 \
     sh -c "pip install --no-cache-dir fastapi uvicorn && uvicorn main:myApp --host 0.0.0.0 --reload"
 ```
