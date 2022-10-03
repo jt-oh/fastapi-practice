@@ -15,5 +15,5 @@ docker run \
     -v "$(pwd)/app:/app" \
     --network=my-mysql-network \
     python:3.10.7 \
-    sh -c "pip install --no-cache-dir fastapi uvicorn && uvicorn main:myApp --host 0.0.0.0 --reload"
+    sh -c "pip install --no-cache-dir fastapi uvicorn sqlalchemy mysql-connector-python && uvicorn main:myApp --host 0.0.0.0 --reload"
 ```
