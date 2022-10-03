@@ -2,21 +2,7 @@ from datetime import datetime
 from typing import List
 from pydantic import BaseModel
 
-class MyItemBase(BaseModel):
-    title: str
-    description: str = ""
-
-class MyItemUpdateOrCreate(MyItemBase):
-    pass
-
-class MyItem(MyItemBase):
-    id: int
-    created_at: datetime
-    updated_at: datetime
-    owner_id: int
-
-    class Config():
-        orm_mode = True
+from schemas.item import MyItem
 
 class MyUserBase(BaseModel):
     age: int

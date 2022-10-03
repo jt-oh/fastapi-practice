@@ -2,7 +2,9 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 
-import models, schemas
+import models
+from schemas.user import *
+from schemas.item import *
 
 
 def get_user(db: Session, user_id: int):
@@ -17,7 +19,7 @@ def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.MyUser).offset(skip).limit(limit).all()
 
 
-def create_user(db: Session, user: schemas.MyUserCreate):
+def create_user(db: Session, user: MyUserCreate):
     fake_hashed_password = user.password + "notreallyhashed"
 
     now = datetime.now()
@@ -30,7 +32,7 @@ def create_user(db: Session, user: schemas.MyUserCreate):
 
     return db_user
 
-def update_user(db: Session, exist_user: schemas.MyUser, user: schemas.MyUserUpdate):
+def update_user(db: Session, exist_user: MyUser, user: MyUserUpdate):
     exist_user_obj = jsonable_encoder(exist_user)
     update_data = user.dict(exclude_unset=True)
 
@@ -46,7 +48,7 @@ def update_user(db: Session, exist_user: schemas.MyUser, user: schemas.MyUserUpd
     return exist_user
     
 
-def delete_user(db: Session, user: schemas.MyUser):
+def delete_user(db: Session, user: MyUser):
     user_id = user.id
 
     db.delete(user)
@@ -58,7 +60,7 @@ def get_items(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.MyItem).offset(skip).limit(limit).all()
 
 
-def create_user_item(db: Session, item: schemas.MyItemUpdateOrCreate, user_id: int):
+def create_user_item(db: Session, item: MyItemUpdateOrCreate, user_id: int):
     db_item = models.MyItem(**item.dict(), owner_id=user_id)
     db.add(db_item)
     db.commit()
