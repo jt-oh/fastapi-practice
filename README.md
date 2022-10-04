@@ -84,3 +84,17 @@ pip install alembic
 - Tutorials
 
 <https://alembic.sqlalchemy.org/en/latest/tutorial.html#the-migration-environment>
+
+## Test
+
+### Pytest
+
+- Installation
+
+``` shell
+pip install pytest
+```
+
+- Tutorials
+
+<https://docs.pytest.org/en/7.1.x/getting-started.html>
