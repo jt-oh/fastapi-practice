@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from api.v1 import api
-from database import engine
+from .api.v1 import api
+from .database import engine
 
 myApp = FastAPI()
 
