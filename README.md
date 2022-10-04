@@ -7,16 +7,17 @@ practice fastapi python web framework on docker environment
 ### Development
 
 script for running develop environment of fastapi on container
+
 #### FastAPI App Docker Container
 
 ``` shell
 docker run \
     -dp 8000:8000 \
-    -w /app \
-    -v "$(pwd)/app:/app" \
+    -w /data \
+    -v "$(pwd)/app:/data/app" \
     --network=my-mysql-network \
     python:3.10.7 \
-    sh -c "pip install --no-cache-dir fastapi uvicorn sqlalchemy mysql-connector-python && uvicorn main:myApp --host 0.0.0.0 --reload"
+    sh -c "pip install --no-cache-dir fastapi uvicorn sqlalchemy mysql-connector-python && uvicorn app.main:myApp --host 0.0.0.0 --reload"
 ```
 
 #### MySQL Docker Container

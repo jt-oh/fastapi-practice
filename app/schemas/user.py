@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 from pydantic import BaseModel
 
-from schemas.item import MyItem
+from .item import MyItem
 
 class MyUserBase(BaseModel):
     age: int
