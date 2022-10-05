@@ -20,7 +20,7 @@ def test_create_user(client: TestClient, configure_test_db):
     assert(res["email"] == user_data["email"])
     assert("password" not in res)
 
-def test_get_user(client: TestClient, configure_test_db):
+def test_get_users(client: TestClient, configure_test_db):
     for user_data in test_user_data:
         client.post("/users/", json=user_data)
 
