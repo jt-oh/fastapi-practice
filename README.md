@@ -55,7 +55,17 @@ pip install SQLAlchemy
 
 - Tutorials
 
-<https://docs.sqlalchemy.org/en/20/>
+<https://docs.sqlalchemy.org/en/14/tutorial/index.html>
+
+- API Docs
+
+#### SQLAlchemy Core Docs with API Specification
+
+<https://docs.sqlalchemy.org/en/14/core/index.html>
+
+#### SQLAlchemy ORM Docs with API Specification
+
+<https://docs.sqlalchemy.org/en/14/orm/index.html>
 
 ## MySql DBAPI
 
@@ -70,6 +80,12 @@ pip install mysql-connector-python
 - Tutorials
 
 <https://dev.mysql.com/doc/connector-python/en/>
+
+- Connection String
+
+``` text
+mysql+mysqlconnector://<user>:<password>@<host>[:<port>]/<dbname>
+```
 
 ## Migration
 
@@ -98,3 +114,9 @@ pip install pytest
 - Tutorials
 
 <https://docs.pytest.org/en/7.1.x/getting-started.html>
+
+- Run Test
+
+``` python
+pytest
+```
