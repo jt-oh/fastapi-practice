@@ -7,8 +7,8 @@ class MyUser(Base):
     __tablename__ = "my_users"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
+    email = Column(String(100), unique=True, index=True)
+    hashed_password = Column(String(500))
     age = Column(Integer)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime)
@@ -20,8 +20,8 @@ class MyItem(Base):
     __tablename__ = "my_items"
     
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, index=True)
-    description = Column(String, index=True)
+    title = Column(String(100), index=True)
+    description = Column(String(1000), index=True)
     owner_id = Column(Integer, ForeignKey("my_users.id"))
     created_at = Column(DateTime)
     updated_at = Column(DateTime)
