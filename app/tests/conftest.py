@@ -4,22 +4,39 @@ import pytest
 from fastapi.testclient import TestClient
 
 from ..main import myApp
-from ..database import SessionLocal
+from ..api.deps import get_db
+from ..database import Base
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
 
 SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://my_fast_api_user:fast_api_pwd@mysql-server:3306/my_fast_api_test_db"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Base = declarative_base()
+
+def override_get_db():
+    db = TestingSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+myApp.dependency_overrides[get_db] = override_get_db
+
+
+@pytest.fixture()
+def configure_test_db():
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
+    yield
+    Base.metadata.drop_all(bind=engine)
+
 
 @pytest.fixture()
 def db() -> Generator:
-    yield SessionLocal
+    yield TestingSessionLocal()
 
 @pytest.fixture()
 def client() -> Generator:
