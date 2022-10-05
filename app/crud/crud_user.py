@@ -8,8 +8,8 @@ from ..schemas.user import *
 
 class CRUDUser():
 
-    def get_user(self, db: Session, user_id: int):
-        return db.query(models.MyUser).filter(models.MyUser.id == user_id).first()
+    def get_user(self, db: Session, user_id: int) -> models.MyUser:
+        return db.get(models.MyUser, user_id)
 
 
     def get_user_by_email(self, db: Session, email: str):
