@@ -33,6 +33,7 @@ class CRUDUser():
 
         return db_user
 
+
     def update_user(self, db: Session, exist_user: models.MyUser, user: MyUserUpdate):
         exist_user_obj = jsonable_encoder(exist_user)
         update_data = user.dict(exclude_unset=True)
@@ -40,8 +41,11 @@ class CRUDUser():
         for field in exist_user_obj:
             if field in update_data:
                 setattr(exist_user, field, update_data[field])
-
         setattr(exist_user, "updated_at", datetime.now())
+
+        # below Session.add() can be omitted as Session does flush
+        # dirty models before Session.commit().
+        # And model has been dirty since attribute changes.
         db.add(exist_user)
         db.commit()
         db.refresh(exist_user)
