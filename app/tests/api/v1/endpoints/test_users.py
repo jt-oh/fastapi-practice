@@ -49,3 +49,20 @@ def test_get_user(client: TestClient, configure_test_db):
     assert(res["age"] is user_data["age"])
     assert(res["email"] == user_data["email"])
     assert("password" not in res)
+
+
+def test_update_user(client: TestClient, configure_test_db):
+    user_data = test_user_data[5]
+    update_age = 39
+
+    create_r = client.post("/users/", json=user_data)
+
+    client.put("/users/" + str(create_r.json()["id"]), json={"age": update_age})
+
+    get_r = client.get("/users/" + str(create_r.json()["id"]))
+    res = get_r.json()
+
+    assert(get_r.status_code is 200)
+    assert(res["age"] is update_age)
+    assert(res["email"] == user_data["email"])
+    assert("password" not in res)
