@@ -2,22 +2,22 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 from fastapi.encoders import jsonable_encoder
 
-from .. import models
-from ..schemas.user import *
+from ..models import MyUser
+from ..schemas.user import MyUserCreate, MyUserUpdate
 
 
 class CRUDUser():
 
-    def get_user(self, db: Session, user_id: int) -> models.MyUser:
-        return db.get(models.MyUser, user_id)
+    def get_user(self, db: Session, user_id: int) -> MyUser:
+        return db.get(MyUser, user_id)
 
 
     def get_user_by_email(self, db: Session, email: str):
-        return db.query(models.MyUser).filter(models.MyUser.email == email).first()
+        return db.query(MyUser).filter(MyUser.email == email).first()
 
 
     def get_users(self, db: Session, skip: int = 0, limit: int = 100):
-        return db.query(models.MyUser).offset(skip).limit(limit).all()
+        return db.query(MyUser).offset(skip).limit(limit).all()
 
 
     def create_user(self, db: Session, user: MyUserCreate):
@@ -25,7 +25,7 @@ class CRUDUser():
 
         now = datetime.now()
 
-        db_user = models.MyUser(email=user.email, age=user.age, hashed_password=fake_hashed_password, created_at=now, updated_at=now)
+        db_user = MyUser(email=user.email, age=user.age, hashed_password=fake_hashed_password, created_at=now, updated_at=now)
 
         db.add(db_user)
         db.commit()
@@ -34,7 +34,7 @@ class CRUDUser():
         return db_user
 
 
-    def update_user(self, db: Session, exist_user: models.MyUser, user: MyUserUpdate):
+    def update_user(self, db: Session, exist_user: MyUser, user: MyUserUpdate):
         exist_user_obj = jsonable_encoder(exist_user)
         update_data = user.dict(exclude_unset=True)
 
@@ -53,7 +53,7 @@ class CRUDUser():
         return exist_user
         
 
-    def delete_user(self, db: Session, user: models.MyUser):
+    def delete_user(self, db: Session, user: MyUser):
         user_id = user.id
 
         db.delete(user)
