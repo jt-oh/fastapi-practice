@@ -20,8 +20,8 @@ class MyItem(Base):
     __tablename__ = "my_items"
     
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String(100), index=True)
-    description = Column(String(1000), index=True)
+    title = Column(String(100))
+    description = Column(String(1000))
     owner_id = Column(Integer, ForeignKey("my_users.id"))
     created_at = Column(DateTime)
     updated_at = Column(DateTime)

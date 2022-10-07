@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 
-import models
-from schemas.user import *
-from schemas.item import *
+from app import models
+from app.schemas.user import *
+from app.schemas.item import *
 
 
 class CRUDItem():

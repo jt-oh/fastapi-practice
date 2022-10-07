@@ -31,8 +31,8 @@ def upgrade() -> None:
     op.create_table(
         'my_items',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('title', sa.String(100), index=True),
-        sa.Column('description', sa.String(1000), index=True),
+        sa.Column('title', sa.String(100)),
+        sa.Column('description', sa.String(1000)),
         sa.Column('owner_id', sa.Integer, sa.ForeignKey("my_users.id")),
         sa.Column('created_at', sa.DateTime),
         sa.Column('updated_at', sa.DateTime)
