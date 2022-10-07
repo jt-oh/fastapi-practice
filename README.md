@@ -6,9 +6,39 @@ practice fastapi python web framework on docker environment
 
 ### Development
 
-script for running develop environment of fastapi on container
+#### Using Docker Compose File (Recommended)
 
-#### FastAPI App Docker Container
+running containers
+
+```shell
+$ docker-compose up -d
+
+WARN[0000] Found orphan containers ([fastapi-practice-netshoot-1]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up. 
+[+] Running 4/4
+ ⠿ Network fastapi-practice_default                  Created                                                                                                                   0.0s
+ ⠿ Container fastapi-practice-my_mysql_test_db-1     Started                                                                                                                   0.4s
+ ⠿ Container fastapi-practice-my_mysql_db-1          Healthy                                                                                                                  31.0s
+ ⠿ Container fastapi-practice-my_fast_api_web_app-1  Started
+```
+
+removing containers
+
+```shell
+$ docker-compose down
+
+[+] Running 4/4
+ ⠿ Container fastapi-practice-my_fast_api_web_app-1  Removed                                                                                                                   0.0s
+ ⠿ Container fastapi-practice-my_mysql_test_db-1     Removed                                                                                                                   0.0s
+ ⠿ Container fastapi-practice-my_mysql_db-1          Removed                                                                                                                   0.0s
+ ⠿ Network fastapi-practice_default                  Removed                                                                                                                   0.1s
+```
+
+
+#### Using Docker Run Command
+
+commands for running develop environment of fastapi on container
+
+##### FastAPI App Docker Container
 
 ``` shell
 docker run \
@@ -20,7 +50,7 @@ docker run \
     sh -c "pip install --no-cache-dir fastapi alembic uvicorn sqlalchemy mysql-connector-python requests pytest && uvicorn app.main:myApp --host 0.0.0.0 --reload"
 ```
 
-#### MySQL Docker Container
+##### MySQL Docker Container
 
 ``` shell
 docker run \
