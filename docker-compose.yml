@@ -1,0 +1,41 @@
+version: "3.7"
+
+services:
+  my_fast_api_web_app:
+    build: ./web
+    depends_on:
+      my_mysql_db:
+        condition: service_healthy
+    ports:
+      - 8000:8000
+    working_dir: /data/web
+    volumes:
+      - ./web:/data/web
+    command: sh -c "alembic upgrade head && uvicorn app.main:myApp --host=0.0.0.0 --reload"
+
+  my_mysql_db:
+    image: mysql:8.0.30
+    volumes:
+      - my_mysql_db:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: my_secret
+      MYSQL_USER: my_fast_api_user
+      MYSQL_PASSWORD: fast_api_pwd
+      MYSQL_DATABASE: my_fast_api_db
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  my_mysql_test_db:
+    image: mysql:8.0.30
+    environment:
+      MYSQL_ROOT_PASSWORD: my_secret
+      MYSQL_USER: my_fast_api_user
+      MYSQL_PASSWORD: fast_api_pwd
+      MYSQL_DATABASE: my_fast_api_test_db
+
+volumes:
+  my_mysql_db:

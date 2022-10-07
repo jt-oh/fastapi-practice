@@ -10,6 +10,7 @@ from ..database import Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://my_fast_api_user:fast_api_pwd@my_mysql_test_db:3306/my_fast_api_test_db"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
